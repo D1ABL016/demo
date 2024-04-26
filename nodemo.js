@@ -7,7 +7,7 @@ const playid = "7xLKWb79xRjzZGbSxhpO5c";
 let token = ""
 const CLIENT_ID = '4968762f41864bca9911e0b2c57b3854';
 const CLIENT_SECRET = '9f27fefc68834d3e88806cd0cba2246d';
-const REDIRECT_URI = 'http://localhost:3000/callback';
+const REDIRECT_URI = 'https://demo-2-y90d.onrender.com/callback';
 
 
 async function getToken() {
@@ -60,6 +60,7 @@ async function getArtistid(artist_name) {
 }
 
 function getPlaylistId(l1) {
+    // if 
     let ans = l1.replace('https://open.spotify.com/playlist/', '')
     return ans
 }
@@ -69,13 +70,13 @@ app.get('/callback', async function (req, res) {
         token = await getToken()
         let AuthHeader = await getAuthHeader(token)
         // let Artist_id = 
-        let Artist_id = await getArtistid(ArtistName)
+        let Artist_id = await getArtistid("krsna")
         let PlayistID = getPlaylistId(userLink)
         // console.log("playlist id ",PlayistID)
 
 
 
-        let url = "https://api.spotify.com/v1/playlists/" + PlayistID
+        let url = "https://api.spotify.com/v1/playlists/" + playid
         const response = await fetch(url, {
             method: "GET",
             headers: AuthHeader
@@ -123,6 +124,10 @@ app.get('/server', async function (req, res) {
 
     res.redirect(`https://accounts.spotify.com/authorize?response_type=code&client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}`);
 
+})
+
+app.get('/',function(req,res){
+    res.send("got to /server")
 })
 
 
